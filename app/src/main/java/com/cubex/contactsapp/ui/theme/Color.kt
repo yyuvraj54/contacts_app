@@ -17,3 +17,8 @@ val screenBackgroundTopColor = Color(0xFFFFFFFF)
 val screenBackgroundBottomColor = Color(0xFF6BE4FF)
 
 val floatingIconBackgroundColor = Color(0xFF0073CC)
+
+
+val saveIconButtonTopColor = Color(0xFF6BBFFF)
+val saveIconButtonBottomColor = Color(0xFF358CCE)
+val profileIconBackgroundColor = Color(0xFFC3E5FF)

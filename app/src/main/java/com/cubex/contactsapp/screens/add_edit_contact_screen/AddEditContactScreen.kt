@@ -1,9 +1,11 @@
 package com.cubex.contactsapp.screens.add_edit_contact_screen
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -12,31 +14,50 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cubex.contactsapp.R
 import com.cubex.contactsapp.ui.theme.profileIconBackgroundColor
 import com.cubex.contactsapp.ui.theme.saveIconButtonBottomColor
 import com.cubex.contactsapp.ui.theme.saveIconButtonTopColor
+import com.cubex.contactsapp.ui.theme.screenBackgroundBottomColor
+import com.cubex.contactsapp.ui.theme.screenBackgroundTopColor
+
+
 
 @Composable
 @Preview
 fun AddEditContactScreen(
     isEditMode: Boolean = false,
-    viewModel: ContactViewModel = viewModel()
+    viewModel: ContactViewModel = viewModel(),
+    screenData:AddEditScreenData? =null
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        screenBackgroundTopColor, screenBackgroundBottomColor
+
+                    )
+                )
+            )
+    ) {
         TopBar(
             title = if (isEditMode) "Edit Contact" else "Add Contact",
-            onSaveClick = { viewModel.saveContact() },
-            onMenuClick = {  }
+            onSaveClick = { viewModel.saveContact(isEditMode)},
+            onMenuClick = { }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        PictureSelector(onClick = {  })
+        PictureSelector(onClick = { })
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -61,7 +82,8 @@ fun AddEditContactScreen(
         ContactTextField(
             label = "Phone",
             value = viewModel.phone,
-            onValueChange = { viewModel.phone = it }
+            onValueChange = { viewModel.phone = it },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
     }
 }
@@ -81,7 +103,7 @@ fun TopBar(title: String, onSaveClick: () -> Unit, onMenuClick: () -> Unit) {
                 modifier = Modifier
                     .background(
                         brush = Brush.verticalGradient(
-                            colors = listOf(saveIconButtonTopColor,saveIconButtonBottomColor)
+                            colors = listOf(saveIconButtonTopColor, saveIconButtonBottomColor)
                         ),
                         shape = RoundedCornerShape(30.dp)
                     )
@@ -115,9 +137,9 @@ fun PictureSelector(onClick: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = Icons.Default.Person,
+                painterResource(id = R.drawable.gallery_icon),
                 contentDescription = "Add Picture",
-                tint = Color.White,
+                tint = Color.Black,
                 modifier = Modifier.size(48.dp)
             )
         }
@@ -127,13 +149,19 @@ fun PictureSelector(onClick: () -> Unit) {
 }
 
 @Composable
-fun ContactTextField(label: String, value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
+fun ContactTextField(
+    label: String,
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
         value = value,
         onValueChange = onValueChange,
+        keyboardOptions = keyboardOptions,
         label = { Text(text = label) }
     )
 }
@@ -144,7 +172,9 @@ class ContactViewModel : ViewModel() {
     var company by mutableStateOf(TextFieldValue(""))
     var phone by mutableStateOf(TextFieldValue(""))
 
-    fun saveContact() {
-        // Save logic here
+    fun saveContact(isEditMode:Boolean) {
+        if(isEditMode == true) {
+
+        }
     }
 }

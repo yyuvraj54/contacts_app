@@ -1,5 +1,7 @@
 package com.cubex.contactsapp.screens.contacts_screen.ui
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -53,6 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.cubex.contactsapp.R
+import com.cubex.contactsapp.screens.add_edit_contact_screen.AddContactScreen.AddEditContactActivity
 
 
 import com.cubex.contactsapp.screens.contacts_screen.model.Contact
@@ -132,7 +135,7 @@ fun ContactsApp() {
             snackbarHost = { SnackbarHost(snackbarHostState) },
             floatingActionButton = {
                 if (uiState.hasPermission) {
-                    ContactFABs(
+                    ContactFABs(context,
                         onAddContact = viewModel::onAddContact,
                         onSyncContacts = viewModel::syncContacts
                     )
@@ -427,6 +430,7 @@ fun ContactList(contacts: List<Contact>) {
 
 @Composable
 fun ContactFABs(
+    context: Context,
     onAddContact: () -> Unit,
     onSyncContacts: () -> Unit
 ) {
@@ -444,7 +448,9 @@ fun ContactFABs(
         }
 
         FloatingActionButton(
-            onClick = onAddContact,
+            onClick = {
+                val intent = Intent(context, AddEditContactActivity::class.java)
+                context.startActivity(intent) },
             containerColor = floatingIconBackgroundColor
         ) {
             Icon(Icons.Default.Add, contentDescription = "Add Contact",tint = Color.White)

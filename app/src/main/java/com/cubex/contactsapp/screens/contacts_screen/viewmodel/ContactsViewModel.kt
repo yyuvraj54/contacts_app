@@ -1,9 +1,11 @@
 package com.cubex.contactsapp.screens.contacts_screen.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.cubex.contactsapp.screens.add_edit_contact_screen.AddContactScreen.AddEditContactActivity
 import com.cubex.contactsapp.screens.contacts_screen.ContactManager
 import com.cubex.contactsapp.screens.contacts_screen.model.Contact
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -147,8 +149,6 @@ class ContactsViewModel(private val contactManager: ContactManager) : ViewModel(
     }
 
     fun onAddContact() {
-        // TODO: Implement add contact functionality
-        // This would typically navigate to an add contact screen
     }
 
     fun clearError() {

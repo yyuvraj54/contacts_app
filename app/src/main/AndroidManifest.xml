@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ContactsApp"
         tools:targetApi="31">
+        <activity android:name=".screens.add_edit_contact_screen.AddContactScreen.AddEditContactActivity" />
         <activity
             android:name=".screens.contacts_screen.ui.MainActivity"
             android:exported="true"

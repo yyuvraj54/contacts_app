@@ -1,4 +1,4 @@
-package com.cubex.contactsapp.model
+package com.cubex.contactsapp.retrofit.model
 
 data class User(
     val id: String,

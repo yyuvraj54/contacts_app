@@ -1,6 +1,5 @@
-package com.cubex.contactsapp.ui.theme
+package com.cubex.contactsapp.app_theme.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

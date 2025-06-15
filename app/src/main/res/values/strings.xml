@@ -1,3 +1,63 @@
 <resources>
     <string name="app_name">contacts app</string>
+
+    <string name="add_contact">Add Contact</string>
+    <string name="contact_added_successfully">Contact added\nSuccessfully</string>
+    <string name="gallery_icon_description">Add Picture</string>
+    <string name="change_picture">Change Picture</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="title_add_contact">Add Contact</string>
+    <string name="title_edit_contact">Edit Contact</string>
+
+    <!-- For form input -->
+    <string name="label_first_name">First Name</string>
+    <string name="label_last_name">Last Name</string>
+    <string name="label_phone_number">Phone Number</string>
+    <string name="label_course">Course</string>
+
+
+    <!-- Emojis -->
+    <string name="emoji_phone">📱</string>
+    <string name="emoji_search">🔍</string>
+    <string name="emoji_contacts">📋</string>
+
+    <!-- Permission Screen -->
+    <string name="access_contacts_title">Access Your Contacts</string>
+    <string name="access_contacts_description">
+        To show your contacts, we need permission to access your contact list. This helps you manage and view all your contacts in one place.
+    </string>
+    <string name="grant_permission_button">Grant Permission</string>
+    <string name="requesting_permissions">Requesting permissions...</string>
+
+    <!-- Loading -->
+    <string name="loading_contacts">Loading contacts...</string>
+
+    <!-- Empty States -->
+    <string name="no_contacts_found">No contacts found</string>
+    <string name="try_different_search">Try a different search term</string>
+    <string name="contact_list_empty_description">Your contact list appears to be empty</string>
+
+    <!-- SearchBar -->
+    <string name="search_placeholder">Search contacts...</string>
+    <string name="search_icon_description">Search</string>
+    <string name="mic_icon_description">Mic Icon</string>
+    <string name="more_options_icon_description">More Options</string>
+
+    <!-- FAB Buttons -->
+    <string name="sync_contacts_description">Sync Contacts</string>
+    <string name="add_contact_description">Add Contact</string>
+
+    <string name="title_new_contacts">New contacts found</string>
+    <string name="label_synced">Synced</string>
+    <string name="no_new_contacts">No new contacts found</string>
+    <string name="popup_contacts_synced">Contacts Synced\nSuccessfully</string>
+
+    <string name="text_saved_result">Saved: %1$d, Failed: %2$d, Skipped: %3$d</string>
+
+    <!-- Icons Descriptions -->
+    <string name="edit_icon_desc">Edit</string>
+    <string name="phone_icon_desc">Phone</string>
+    <string name="mail_icon_desc">Email</string>
+
+
 </resources>

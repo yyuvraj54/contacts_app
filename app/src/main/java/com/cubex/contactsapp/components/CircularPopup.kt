@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,10 +23,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cubex.contactsapp.ui.theme.popUpCentreBackground
-import com.cubex.contactsapp.ui.theme.popUpCorrectIconBackground
-import com.cubex.contactsapp.ui.theme.popUpOuterBackground
-import com.cubex.contactsapp.ui.theme.whiteColor
+import com.cubex.contactsapp.app_theme.theme.popUpCentreBackground
+import com.cubex.contactsapp.app_theme.theme.popUpCorrectIconBackground
+import com.cubex.contactsapp.app_theme.theme.popUpOuterBackground
 
 
 @Composable

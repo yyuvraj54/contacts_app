@@ -27,8 +27,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
@@ -40,7 +38,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,6 +51,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -66,13 +64,13 @@ import com.cubex.contactsapp.screens.contacts_screen.viewmodel.ContactsUiState
 import com.cubex.contactsapp.screens.contacts_screen.viewmodel.ContactsViewModel
 import com.cubex.contactsapp.screens.contacts_screen.viewmodel.ContactsViewModelFactory
 import com.cubex.contactsapp.screens.contacts_sync_screen.ui.ContactSyncScreenActivity
-import com.cubex.contactsapp.ui.theme.ContactsAppTheme
-import com.cubex.contactsapp.ui.theme.floatingIconBackgroundColor
-import com.cubex.contactsapp.ui.theme.screenBackgroundBottomColor
-import com.cubex.contactsapp.ui.theme.screenBackgroundTopColor
+import com.cubex.contactsapp.app_theme.theme.ContactsAppTheme
+import com.cubex.contactsapp.app_theme.theme.floatingIconBackgroundColor
+import com.cubex.contactsapp.app_theme.theme.screenBackgroundBottomColor
+import com.cubex.contactsapp.app_theme.theme.screenBackgroundTopColor
 import kotlin.random.Random
 
-class MainActivity : ComponentActivity() {
+class ContactListScreenActivity : ComponentActivity() {
     private var viewModel: ContactsViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,7 +86,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Refresh contacts when returning to the activity
         viewModel?.refreshContacts()
     }
 
@@ -98,8 +95,6 @@ class MainActivity : ComponentActivity() {
         val contactsViewModel: ContactsViewModel = viewModel(
             factory = ContactsViewModelFactory(context)
         )
-
-        // Store the viewModel reference for onResume
         viewModel = contactsViewModel
 
         val uiState by contactsViewModel.uiState.collectAsState()
@@ -182,14 +177,14 @@ class MainActivity : ComponentActivity() {
 
                     !uiState.hasPermission -> {
                         LoadingScreen(
-                            message = "Requesting permissions...",
+                            message = stringResource(R.string.requesting_permissions),
                             modifier = Modifier.padding(padding)
                         )
                     }
 
                     uiState.isLoading && uiState.contacts.isEmpty() -> {
                         LoadingScreen(
-                            message = "Loading contacts...",
+                            message =  stringResource(R.string.loading_contacts),
                             modifier = Modifier.padding(padding)
                         )
                     }
@@ -221,18 +216,18 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.padding(32.dp)
             ) {
                 Text(
-                    text = "📱",
+                    text =  stringResource(R.string.emoji_phone),
                     style = MaterialTheme.typography.displayLarge
                 )
 
                 Text(
-                    text = "Access Your Contacts",
+                    text = stringResource(R.string.access_contacts_title),
                     style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Center
                 )
 
                 Text(
-                    text = "To show your contacts, we need permission to access your contact list. This helps you manage and view all your contacts in one place.",
+                    text = stringResource(R.string.access_contacts_description),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -325,15 +320,15 @@ class MainActivity : ComponentActivity() {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "🔍",
+                    text = stringResource(R.string.emoji_search),
                     style = MaterialTheme.typography.displayMedium
                 )
                 Text(
-                    text = "No contacts found",
+                    text = stringResource(R.string.no_contacts_found),
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "Try a different search term",
+                    text = stringResource(R.string.try_different_search),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -352,15 +347,15 @@ class MainActivity : ComponentActivity() {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "📋",
+                    text = stringResource(R.string.emoji_contacts),
                     style = MaterialTheme.typography.displayMedium
                 )
                 Text(
-                    text = "No contacts found",
+                    text = stringResource(R.string.no_contacts_found),
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "Your contact list appears to be empty",
+                    text = stringResource(R.string.contact_list_empty_description),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -384,20 +379,20 @@ class MainActivity : ComponentActivity() {
             OutlinedTextField(
                 value = query,
                 onValueChange = onQueryChanged,
-                placeholder = { Text("Search contacts...") },
+                placeholder = { Text(stringResource(R.string.search_placeholder),) },
                 leadingIcon = {
-                    Icon( painterResource(R.drawable.search_icon), contentDescription = "Search")
+                    Icon( painterResource(R.drawable.search_icon), contentDescription = stringResource(R.string.search_icon_description),)
                 },
                 trailingIcon = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painterResource(R.drawable.mic_icon),
-                            contentDescription = "Mic Icon"
+                            contentDescription = stringResource(R.string.mic_icon_description),
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Icon(
                             painterResource(R.drawable.three_dots_icon),
-                            contentDescription = "More Options"
+                            contentDescription = stringResource(R.string.more_options_icon_description),
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                     }
@@ -503,7 +498,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.sync),
-                    contentDescription = "Sync Contacts",
+                    contentDescription = stringResource(R.string.sync_contacts_description),
                     tint = Color.White
                 )
             }
@@ -515,7 +510,7 @@ class MainActivity : ComponentActivity() {
                 },
                 containerColor = floatingIconBackgroundColor
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Contact", tint = Color.White)
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_contact), tint = Color.White)
             }
         }
     }

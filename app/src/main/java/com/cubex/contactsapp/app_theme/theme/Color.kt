@@ -1,4 +1,4 @@
-package com.cubex.contactsapp.ui.theme
+package com.cubex.contactsapp.app_theme.theme
 
 import androidx.compose.ui.graphics.Color
 

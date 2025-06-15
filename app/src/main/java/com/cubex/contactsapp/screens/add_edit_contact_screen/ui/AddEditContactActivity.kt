@@ -7,10 +7,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.ui.res.stringResource
+import com.cubex.contactsapp.R
+import com.cubex.contactsapp.Utilities
 import com.cubex.contactsapp.retrofit.model.User
 import com.cubex.contactsapp.screens.add_edit_contact_screen.model.AddEditScreenData
 import com.cubex.contactsapp.screens.add_edit_contact_screen.viewmodel.ContactFormViewModel
-import com.cubex.contactsapp.ui.theme.ContactsAppTheme
+import com.cubex.contactsapp.app_theme.theme.ContactsAppTheme
 import com.google.gson.Gson
 
 
@@ -18,7 +21,6 @@ class AddEditContactActivity : ComponentActivity() {
 
     private val viewModel by viewModels<ContactFormViewModel>()
 
-    // Image picker launcher
     private val imagePickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -27,7 +29,7 @@ class AddEditContactActivity : ComponentActivity() {
                 uri,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION
             )
-            val imagePath = getRealPathFromURI(it) ?: it.toString()
+            val imagePath = Utilities.getRealPathFromURI(this,it) ?: it.toString()
             viewModel.updateProfileImage(imagePath)
         }
     }
@@ -39,7 +41,9 @@ class AddEditContactActivity : ComponentActivity() {
         val contactData = userJson?.let {
             val user = Gson().fromJson(it, User::class.java)
             AddEditScreenData(
-                screenTitle = if (isEditMode) "Edit Contact" else "Add Contact",
+                screenTitle = getString(
+                    if (isEditMode) R.string.title_edit_contact else R.string.title_add_contact
+                ),
                 contactList = user
             )
         }
@@ -47,23 +51,6 @@ class AddEditContactActivity : ComponentActivity() {
         contactData?.let {
             viewModel.loadContact(it)
         }
-
-        val screenData = if (isEditMode) {
-            AddEditScreenData(
-                "Edit Contact",
-                User(
-                    id = intent.getStringExtra("userId") ?: "",
-                    fullName = intent.getStringExtra("fullName") ?: "",
-                    phone = intent.getStringExtra("phone") ?: "",
-                    email = intent.getStringExtra("email") ?: "",
-                    course = intent.getStringExtra("course") ?: "",
-                    profileImage = intent.getStringExtra("profileImage")
-
-                )
-            )
-        } else null
-
-
 
         setContent {
             ContactsAppTheme {
@@ -88,24 +75,5 @@ class AddEditContactActivity : ComponentActivity() {
             }
         }
     }
-    private fun getRealPathFromURI(uri: Uri): String? {
-        return try {
-            val cursor = contentResolver.query(uri, null, null, null, null)
-            cursor?.use {
-                if (it.moveToFirst()) {
-                    val columnIndex = it.getColumnIndex(android.provider.MediaStore.Images.Media.DATA)
-                    if (columnIndex != -1) {
-                        it.getString(columnIndex)
-                    } else {
-                        null
-                    }
-                } else {
-                    null
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
+
 }

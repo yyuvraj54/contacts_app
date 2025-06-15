@@ -21,7 +21,7 @@
         <activity android:name=".screens.add_edit_contact_screen.ui.AddEditContactActivity" />
         <activity android:name=".screens.contacts_sync_screen.ui.ContactSyncScreenActivity" />
         <activity
-            android:name=".screens.contacts_screen.ui.MainActivity"
+            android:name=".screens.contacts_screen.ui.ContactListScreenActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ContactsApp">

@@ -22,8 +22,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cubex.contactsapp.ui.theme.progressBarEndColor
-import com.cubex.contactsapp.ui.theme.progressBarStartColor
+import com.cubex.contactsapp.app_theme.theme.progressBarEndColor
+import com.cubex.contactsapp.app_theme.theme.progressBarStartColor
 
 
 @Composable

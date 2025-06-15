@@ -23,10 +23,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -40,7 +36,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.cubex.contactsapp.retrofit.model.User
-import com.cubex.contactsapp.ui.theme.ContactsAppTheme
+import com.cubex.contactsapp.app_theme.theme.ContactsAppTheme
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,37 +44,34 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cubex.contactsapp.R
 import com.cubex.contactsapp.components.CircularPopup
 import com.cubex.contactsapp.components.GradientCircularProgressBar
 import com.cubex.contactsapp.screens.add_edit_contact_screen.ui.AddEditContactActivity
 import com.cubex.contactsapp.screens.contacts_sync_screen.viewmodel.ContactSyncViewModel
-import com.cubex.contactsapp.ui.theme.screenBackgroundBottomColor
-import com.cubex.contactsapp.ui.theme.screenBackgroundTopColor
+import com.cubex.contactsapp.app_theme.theme.screenBackgroundBottomColor
+import com.cubex.contactsapp.app_theme.theme.screenBackgroundTopColor
 import com.google.gson.Gson
 import kotlin.jvm.java
 
 class ContactSyncScreenActivity : ComponentActivity() {
     private lateinit var viewModel: ContactSyncViewModel
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProvider(this)[ContactSyncViewModel::class.java]
 
-        // FIXED: Use Activity Result API properly
         val editContactLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-
-                // FIXED: Get the User object directly (not JSON string)
                 val updatedUser = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
                     result.data?.getSerializableExtra("updatedUser", User::class.java)
                 } else {
@@ -159,7 +152,7 @@ fun ContactSyncScreen(
                 .fillMaxSize()
                 .padding(bottom = 16.dp)
         ) {
-            TopBar(title = "New contacts found")
+            TopBar(title = stringResource(R.string.title_new_contacts))
 
             when {
                 isLoading -> {
@@ -171,7 +164,7 @@ fun ContactSyncScreen(
                 users.isEmpty() -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text(
-                            text = "No new contacts found",
+                            text = stringResource(R.string.no_contacts_found),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -250,8 +243,8 @@ fun ContactCard(user: User, gradient: Brush,  onEditClick:(User) -> Unit = {}) {
                         )
                     }
                     Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Edit",
+                        painterResource(R.drawable.edit_icon),
+                        contentDescription = stringResource(R.string.edit_icon_desc),
                         tint = Color.White,
                         modifier = Modifier.clickable {
                             onEditClick(user)
@@ -263,8 +256,8 @@ fun ContactCard(user: User, gradient: Brush,  onEditClick:(User) -> Unit = {}) {
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.Phone,
-                        contentDescription = "Phone",
+                        painterResource(R.drawable.phone_icon),
+                        contentDescription = stringResource(R.string.phone_icon_desc),
                         tint = Color.White
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -279,8 +272,8 @@ fun ContactCard(user: User, gradient: Brush,  onEditClick:(User) -> Unit = {}) {
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "Email",
+                        painterResource(R.drawable.mail_icon),
+                        contentDescription = stringResource(R.string.mail_icon_desc),
                         tint = Color.White
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -319,7 +312,7 @@ fun BottomBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Synced", style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.label_synced), style = MaterialTheme.typography.bodySmall)
                 Text(syncDate, style = MaterialTheme.typography.bodySmall)
             }
 
@@ -329,7 +322,7 @@ fun BottomBar(
                     showPopup = true
                 }
             }) {
-                Text("Sync Contacts")
+                Text(stringResource(R.string.sync_contacts_description))
             }
         }
 
@@ -339,11 +332,10 @@ fun BottomBar(
         }
     }
 
-    // ✅ Show popup as dialog
     if (showPopup) {
         Dialog(onDismissRequest = { }) {
             CircularPopup(
-                label = "Contacts Synced\nSuccessfully",
+                label = stringResource(R.string.popup_contacts_synced),
                 onDismiss = {
                     showPopup = false
                     activity?.finish()

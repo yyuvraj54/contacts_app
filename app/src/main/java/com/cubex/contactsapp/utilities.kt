@@ -12,12 +12,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 object Utilities {
-    /**
-     * Save a single contact to the phone's contact database
-     * @param context Application context
-     * @param user User object containing contact details
-     * @return Boolean indicating success or failure
-     */
+
     fun saveContact(context: Context, user: User): Boolean {
         return try {
             val operations = ArrayList<ContentProviderOperation>()
@@ -137,9 +132,7 @@ object Utilities {
         }
     }
 
-    /**
-     * Enhanced version of getImageBytes that accepts context for content URI handling
-     */
+
     private fun getImageBytes(context: Context, imagePath: String): ByteArray? {
         return try {
             val bitmap = when {
@@ -230,4 +223,27 @@ object Utilities {
         Log.d("ContactSave", "Batch save with duplicate check completed. Success: $successCount, Failed: $failureCount, Skipped: $skippedCount")
         return Triple(successCount, failureCount, skippedCount)
     }
+
+
+    internal fun getRealPathFromURI(context: Context, uri: Uri): String? {
+        return try {
+            val cursor = context.contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    val columnIndex = it.getColumnIndex(android.provider.MediaStore.Images.Media.DATA)
+                    if (columnIndex != -1) {
+                        it.getString(columnIndex)
+                    } else {
+                        null
+                    }
+                } else {
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
 }

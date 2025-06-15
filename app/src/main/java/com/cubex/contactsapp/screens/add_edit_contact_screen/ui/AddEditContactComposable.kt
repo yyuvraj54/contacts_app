@@ -20,27 +20,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.cubex.contactsapp.R
 import com.cubex.contactsapp.components.CircularPopup
-import com.cubex.contactsapp.components.GradientCircularProgressBar
 import com.cubex.contactsapp.retrofit.model.User
 import com.cubex.contactsapp.screens.add_edit_contact_screen.model.AddEditScreenData
 import com.cubex.contactsapp.screens.add_edit_contact_screen.viewmodel.ContactFormViewModel
-import com.cubex.contactsapp.ui.theme.profileIconBackgroundColor
-import com.cubex.contactsapp.ui.theme.saveIconButtonBottomColor
-import com.cubex.contactsapp.ui.theme.saveIconButtonTopColor
-import com.cubex.contactsapp.ui.theme.screenBackgroundBottomColor
-import com.cubex.contactsapp.ui.theme.screenBackgroundTopColor
-import kotlin.math.sin
+import com.cubex.contactsapp.app_theme.theme.profileIconBackgroundColor
+import com.cubex.contactsapp.app_theme.theme.saveIconButtonBottomColor
+import com.cubex.contactsapp.app_theme.theme.saveIconButtonTopColor
+import com.cubex.contactsapp.app_theme.theme.screenBackgroundBottomColor
+import com.cubex.contactsapp.app_theme.theme.screenBackgroundTopColor
 
 
 @Composable
@@ -65,7 +62,7 @@ fun AddEditContactScreen(
         val context = LocalContext.current
         var showSuccessDialog by remember { mutableStateOf(false) }
         TopBar(
-            title = screenData?.screenTitle ?: "Add Contact",
+            title = screenData?.screenTitle ?: stringResource(R.string.add_contact),
             onSaveClick = {
                 if (!isEditMode) {
                     val newUser = User(
@@ -103,7 +100,7 @@ fun AddEditContactScreen(
                 onSaveAndExit()
             }) {
                 CircularPopup(
-                    label = "Contact added\nSuccessfully",
+                    label = stringResource(R.string.contact_added_successfully),
                     onDismiss = {
                         showSuccessDialog = false
                         (context as? Activity)?.finish()
@@ -124,25 +121,25 @@ fun AddEditContactScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         ContactTextField(
-            label = "First Name",
+            label = stringResource(R.string.label_first_name),
             value = viewModel.firstName.value,
             onValueChange = { viewModel.firstName.value = it }
         )
 
         ContactTextField(
-            label = "Sure Name",
+            label = stringResource(R.string.label_last_name),
             value = viewModel.sureName.value,
             onValueChange = { viewModel.sureName.value = it }
         )
 
         ContactTextField(
-            label = "Company",
+            label =  stringResource(R.string.label_course),
             value = viewModel.company.value,
             onValueChange = { viewModel.company.value = it }
         )
 
         ContactTextField(
-            label = "Phone",
+            label =  stringResource(R.string.label_phone_number),
             value = viewModel.phone.value,
             onValueChange = { viewModel.phone.value = it },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -208,12 +205,12 @@ fun PictureSelector(
                 // Display selected image using Glide
                 GlideImage(
                     model = currentImagePath,
-                    contentDescription = "Profile Picture",
+                    contentDescription = stringResource(R.string.profile_picture),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(CircleShape)
-                ) {
+                ){
                     it.error(R.drawable.gallery_icon)
                         .placeholder(R.drawable.gallery_icon)
                 }
@@ -221,14 +218,14 @@ fun PictureSelector(
                 // Display default gallery icon
                 Icon(
                     painterResource(id = R.drawable.gallery_icon),
-                    contentDescription = "Add Picture",
+                    contentDescription = stringResource(R.string.gallery_icon_description),
                     tint = Color.Black,
                     modifier = Modifier.size(48.dp)
                 )
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = if (currentImagePath != null) "Change Picture" else "Add Picture")
+        Text(text = if (currentImagePath != null)  stringResource(R.string.gallery_icon_description) else stringResource(R.string.gallery_icon_description) )
     }
 }
 

@@ -110,8 +110,5 @@ class ContactSyncViewModel : ViewModel() {
         return phone.replace(Regex("[^\\d]"), "").takeLast(10)
     }
 
-    private fun getCurrentTimeFormatted(): String {
-        return SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Date())
-    }
 
 }
